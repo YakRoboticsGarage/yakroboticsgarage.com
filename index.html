@@ -38,18 +38,26 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Outfit', sans-serif;
-  background: var(--void);
+  background: #0A0A0F;
   color: var(--dust);
   overflow-x: hidden;
-  background: url('https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=1920&q=80') center/cover no-repeat fixed;
 }
 
 body::before {
   content: '';
   position: fixed;
   inset: 0;
+  background: url('https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=1920&q=80') center/cover no-repeat;
+  z-index: -2;
+  pointer-events: none;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
   background: rgba(10,10,15,0.55);
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
 }
 
@@ -769,7 +777,7 @@ section { position: relative; z-index: 1; }
 <section class="cta-section reveal">
   <span class="section-label">Join The Mission</span>
   <h2 class="section-title">Not one rover for billions.<br>A billion rovers for everyone.</h2>
-  <p>All code, all hardware designs, all protocols — open source, forever.</p>
+  <p>All code, all hardware designs, all protocols — open source.</p>
   <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
     <a href="https://github.com/YakRoboticsGarage" target="_blank" class="btn btn-primary">GitHub</a>
     <a href="https://yakrobot.bid/" target="_blank" class="btn btn-ghost">yakrobot.bid</a>
