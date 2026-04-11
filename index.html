@@ -301,6 +301,39 @@ section { position: relative; z-index: 1; }
   margin-bottom: 0.15rem;
 }
 
+.step details {
+  margin: 0;
+}
+
+.step summary {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--dust);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.step summary::-webkit-details-marker { display: none; }
+
+.step summary::after {
+  content: '+';
+  font-family: 'Space Mono', monospace;
+  font-size: 1rem;
+  color: var(--glow);
+  transition: transform 0.2s;
+}
+
+.step details[open] summary::after {
+  content: '−';
+}
+
+.step details p {
+  margin-top: 0.4rem;
+}
+
 /* ── TECH STACK ── */
 .stack-grid {
   display: grid;
@@ -575,32 +608,40 @@ section { position: relative; z-index: 1; }
   <div class="section-pad reveal">
     <span class="section-label">The Secret Master Plan</span>
     <h2 class="section-title">Four Steps to Mars</h2>
-    <p class="plan-tongue">(just between you and me — with a nod to <a href="https://www.tesla.com/en_in/secret-master-plan" target="_blank">a certain other master plan</a>)</p>
+    <p class="plan-tongue">(just between us, don't tell anyone — with a nod to <a href="https://www.tesla.com/en_in/secret-master-plan" target="_blank">a certain other master plan</a>)</p>
 
     <div class="plan-steps">
       <div class="step">
         <div class="step-icon">🏠</div>
         <div class="step-num">Step 01 — Now</div>
-        <h3>Rove the Room &amp; Backyard</h3>
-        <p>Build an open-source, AI-orchestrated rover on ESP32-S3 that anyone can assemble, program, and deploy at home. Self-balancing, vision-enabled, cryptographically secured. Cost: under $150.</p>
+        <details>
+          <summary>Rove the Room &amp; Backyard</summary>
+          <p>Build an open-source, AI-orchestrated rover on ESP32-S3 that anyone can assemble, program, and deploy at home. Self-balancing, vision-enabled, cryptographically secured. Cost: under $150.</p>
+        </details>
       </div>
       <div class="step">
         <div class="step-icon">🏜️</div>
         <div class="step-num">Step 02 — Next</div>
-        <h3>Rove the Mojave</h3>
-        <p>Harden the platform for desert terrain. Autonomous navigation across miles of uncharted earth. Long-range comms, solar power, fleet coordination. Proving ground for what comes next.</p>
+        <details>
+          <summary>Rove the Mojave</summary>
+          <p>Harden the platform for desert terrain. Autonomous navigation across miles of uncharted earth. Long-range comms, solar power, fleet coordination. Proving ground for what comes next.</p>
+        </details>
       </div>
       <div class="step">
         <div class="step-icon">🌙</div>
         <div class="step-num">Step 03 — Soon</div>
-        <h3>Rove the Moon</h3>
-        <p>Adapt the open-source stack for lunar surface operations. Radiation-hardened firmware, regolith-ready chassis, Earth-to-Moon command pipeline. The ultimate field test.</p>
+        <details>
+          <summary>Rove the Moon</summary>
+          <p>Adapt the open-source stack for lunar surface operations. Radiation-hardened firmware, regolith-ready chassis, Earth-to-Moon command pipeline. The ultimate field test.</p>
+        </details>
       </div>
       <div class="step">
         <div class="step-icon">🔴</div>
         <div class="step-num">Step 04 — Inevitable</div>
-        <h3>Rove Mars</h3>
-        <p>Open-source everything so everyone can have their rover on Mars. Not one $2.7B rover for NASA — a thousand $2,700 rovers for humanity.</p>
+        <details>
+          <summary>Rove Mars</summary>
+          <p>Open-source everything so everyone can have their rover on Mars. Not one $2.7B rover for NASA — a thousand $2,700 rovers for humanity.</p>
+        </details>
       </div>
     </div>
   </div>
