@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mars/Moon Rovers For Everyone — Yak Robotics Garage</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --mars: #C1440E;
+  --mars-light: #E8622A;
+  --dust: #F5E6D3;
+  --void: #0A0A0F;
+  --steel: #1A1A2E;
+  --moon: #D4D4D8;
+  --accent: #FF6B35;
+  --glow: #FF9F1C;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--void);
+  color: var(--dust);
+  overflow-x: hidden;
+  background: url('https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=1920&q=80') center/cover no-repeat fixed;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(10,10,15,0.55);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Stars background ── */
+.stars {
+  position: fixed; inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1.5px 1.5px at 50% 10%, rgba(255,255,255,0.9), transparent),
+    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1.5px 1.5px at 15% 85%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 45% 45%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 25% 35%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 55% 90%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 85% 55%, rgba(255,255,255,0.5), transparent);
+  pointer-events: none;
+}
+
+section { position: relative; z-index: 1; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 40%;
+  background: linear-gradient(to top, rgba(10,10,15,0.4), transparent);
+  pointer-events: none;
+}
+
+.badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--glow);
+  border: 1px solid var(--glow);
+  padding: 0.5em 1.5em;
+  border-radius: 100px;
+  margin-bottom: 2rem;
+  animation: fadeIn 1s ease-out;
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  font-weight: 900;
+  line-height: 1.05;
+  max-width: 900px;
+  animation: slideUp 0.8s ease-out;
+}
+
+.hero h1 .mars-text {
+  background: linear-gradient(135deg, var(--mars-light), var(--glow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 300;
+  max-width: 600px;
+  margin-top: 1.5rem;
+  color: var(--moon);
+  line-height: 1.6;
+  animation: slideUp 0.8s ease-out 0.15s both;
+}
+
+.hero-cta {
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: slideUp 0.8s ease-out 0.3s both;
+}
+
+.btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 1em 2.5em;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.3s;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--mars);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--mars-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(193,68,14,0.4); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--dust);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.btn-ghost:hover { border-color: var(--glow); color: var(--glow); }
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  animation: bounce 2s infinite;
+}
+
+/* ── SECTION STYLING ── */
+.section-pad {
+  padding: 4rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--glow);
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+}
+
+/* ── VIDEO ── */
+.video-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  aspect-ratio: 16/9;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.video-wrap iframe {
+  width: 100%; height: 100%; border: none;
+}
+
+/* ── MASTER PLAN ── */
+.plan-section {
+  background: linear-gradient(180deg, transparent, rgba(193,68,14,0.05) 30%, rgba(193,68,14,0.08) 70%, transparent);
+}
+
+.plan-tongue {
+  font-style: italic;
+  color: rgba(255,255,255,0.4);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.plan-tongue a { color: var(--glow); text-decoration: none; }
+.plan-tongue a:hover { text-decoration: underline; }
+
+.plan-steps {
+  display: grid;
+  gap: 0;
+  position: relative;
+  padding-left: 3rem;
+}
+
+.plan-steps::before {
+  content: '';
+  position: absolute;
+  left: 0.6rem;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--glow), var(--mars), var(--mars-light), #FF6B35);
+}
+
+.step {
+  position: relative;
+  padding: 0.8rem 0 1.2rem 1.5rem;
+}
+
+.step::before {
+  content: '';
+  position: absolute;
+  left: -2.65rem;
+  top: 1.7rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--glow);
+  background: var(--void);
+  transition: all 0.3s;
+}
+
+.step:hover::before {
+  background: var(--glow);
+  box-shadow: 0 0 15px var(--glow);
+}
+
+.step-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--glow);
+  margin-bottom: 0.4rem;
+}
+
+.step h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.step p {
+  color: var(--moon);
+  font-weight: 300;
+  line-height: 1.5;
+  max-width: 550px;
+  font-size: 0.9rem;
+}
+
+.step-icon {
+  font-size: 1.3rem;
+  margin-bottom: 0.15rem;
+}
+
+/* ── TECH STACK ── */
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.stack-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 2rem;
+  transition: all 0.3s;
+}
+
+.stack-card:hover {
+  border-color: var(--mars);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(193,68,14,0.15);
+}
+
+.stack-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+}
+
+.stack-card p {
+  font-size: 0.9rem;
+  color: var(--moon);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.stack-card .mono-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--glow);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.stack-card a {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--mars-light);
+  text-decoration: none;
+}
+.stack-card a:hover { color: var(--glow); text-decoration: underline; }
+
+/* ── SECOND VIDEO ── */
+.video2-section {
+  padding: 4rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.video2-section .section-title { margin-bottom: 2rem; }
+
+/* ── ABOUT / FELLOWSHIP ── */
+.about-section {
+  background: linear-gradient(180deg, transparent, rgba(255,159,28,0.04) 50%, transparent);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 700px) {
+  .about-grid { grid-template-columns: 1fr; }
+}
+
+.about-block h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.about-block p {
+  font-size: 0.95rem;
+  color: var(--moon);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.about-block a { color: var(--mars-light); text-decoration: none; }
+.about-block a:hover { text-decoration: underline; color: var(--glow); }
+
+/* ── CTA FOOTER ── */
+.cta-section {
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+}
+
+.cta-section .section-title {
+  max-width: 700px;
+  margin: 0 auto 1rem;
+}
+
+.cta-section p {
+  color: var(--moon);
+  font-weight: 300;
+  max-width: 500px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.footer-links a {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.35);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.footer-links a:hover { color: var(--glow); }
+
+.footer-copy {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.15);
+  font-family: 'Space Mono', monospace;
+}
+
+/* ── CINEMATIC IMAGE PANELS ── */
+.img-panel {
+  width: 100%;
+  height: 45vh;
+  min-height: 300px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 2.5rem;
+}
+
+.img-panel img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.img-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10,10,15,0.8) 0%, transparent 25%, transparent 60%, rgba(10,10,15,0.8) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.img-panel .panel-caption {
+  position: relative;
+  z-index: 2;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ── IMAGE GRID ── */
+.img-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 600px) {
+  .img-duo { grid-template-columns: 1fr; }
+}
+
+.img-duo .duo-cell {
+  height: 35vh;
+  min-height: 250px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+}
+
+.img-duo .duo-cell img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-duo .duo-cell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(10,10,15,0.7) 100%);
+}
+
+.img-duo .duo-cell .panel-caption {
+  position: relative;
+  z-index: 2;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<!-- ════ HERO ════ -->
+<section class="hero">
+  <h1><span class="mars-text">Mars/Moon Rovers</span><br>For Everyone</h1>
+  <p class="hero-sub">Open-source rovers from your backyard to the surface of Mars.<br>Built in public, available to all.</p>
+  <div class="hero-cta">
+    <a href="#plan" class="btn btn-primary">The Secret Master Plan</a>
+    <a href="https://github.com/YakRoboticsGarage" target="_blank" class="btn btn-ghost">View on GitHub →</a>
+  </div>
+  <div class="scroll-hint">↓ scroll</div>
+</section>
+
+<!-- ════ THE SECRET MASTER PLAN ════ -->
+<section class="plan-section" id="plan">
+  <div class="section-pad reveal">
+    <span class="section-label">The Secret Master Plan</span>
+    <h2 class="section-title">Four Steps to Mars</h2>
+    <p class="plan-tongue">(just between you and me — with a nod to <a href="https://www.tesla.com/en_in/secret-master-plan" target="_blank">a certain other master plan</a>)</p>
+
+    <div class="plan-steps">
+      <div class="step">
+        <div class="step-icon">🏠</div>
+        <div class="step-num">Step 01 — Now</div>
+        <h3>Rove the Room &amp; Backyard</h3>
+        <p>Build an open-source, AI-orchestrated rover on ESP32-S3 that anyone can assemble, program, and deploy at home. Self-balancing, vision-enabled, cryptographically secured. Cost: under $150.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">🏜️</div>
+        <div class="step-num">Step 02 — Next</div>
+        <h3>Rove the Mojave</h3>
+        <p>Harden the platform for desert terrain. Autonomous navigation across miles of uncharted earth. Long-range comms, solar power, fleet coordination. Proving ground for what comes next.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">🌙</div>
+        <div class="step-num">Step 03 — Soon</div>
+        <h3>Rove the Moon</h3>
+        <p>Adapt the open-source stack for lunar surface operations. Radiation-hardened firmware, regolith-ready chassis, Earth-to-Moon command pipeline. The ultimate field test.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">🔴</div>
+        <div class="step-num">Step 04 — Inevitable</div>
+        <h3>Rove Mars</h3>
+        <p>Open-source everything so everyone can have their rover on Mars. Not one $2.7B rover for NASA — a thousand $2,700 rovers for humanity.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ MOON + MARS DUO ════ -->
+<div class="img-duo">
+  <div class="duo-cell">
+    <img src="https://images.unsplash.com/photo-1522030299830-16b8d3d049fe?w=960&q=80" alt="Moon surface" loading="lazy">
+    <span class="panel-caption">Moon — Step 03&nbsp;&nbsp;·&nbsp;&nbsp;Unsplash</span>
+  </div>
+  <div class="duo-cell">
+    <img src="https://images.unsplash.com/photo-1630694093867-4b947d812bf0?w=960&q=80" alt="Mars terrain" loading="lazy">
+    <span class="panel-caption">Mars — Step 04&nbsp;&nbsp;·&nbsp;&nbsp;Unsplash</span>
+  </div>
+</div>
+
+<!-- ════ TECH STACK ════ -->
+<section class="section-pad reveal" id="tech">
+  <span class="section-label">What's Already Built</span>
+  <h2 class="section-title">The Protocol Stack</h2>
+  <p style="color: var(--moon); font-weight: 300; line-height: 1.7; max-width: 650px; margin-bottom: 1rem;">A full-stack open-source infrastructure for autonomous robot fleets — from on-chip cryptography to on-chain identity.</p>
+
+  <div class="stack-grid">
+    <div class="stack-card">
+      <span class="mono-tag">Identity</span>
+      <h3>ERC-8004 Robot Identity</h3>
+      <p>On-chain discovery and identity protocol for robots. Each rover gets a verifiable, decentralized identity anchored to hardware via ATECC608B secure elements.</p>
+      <a href="https://github.com/YakRoboticsGarage/yakrover-protocols" target="_blank">→ yakrover-protocols</a>
+    </div>
+    <div class="stack-card">
+      <span class="mono-tag">Gateway</span>
+      <h3>MCP Command Gateway</h3>
+      <p>FastAPI + Model Context Protocol gateway. LLMs can discover, command, and query rovers through natural language. Per-robot isolated instances.</p>
+      <a href="https://github.com/YakRoboticsGarage/yakrover-8004-mcp" target="_blank">→ yakrover-8004-mcp</a>
+    </div>
+    <div class="stack-card">
+      <span class="mono-tag">Marketplace</span>
+      <h3>Robot Task Marketplace</h3>
+      <p>Decentralized marketplace for robot tasks. Post a job, rovers bid, work gets verified on-chain with zero-knowledge proofs of sensor data integrity.</p>
+      <a href="https://github.com/YakRoboticsGarage/yakrover-marketplace" target="_blank">→ yakrover-marketplace</a>
+    </div>
+    <div class="stack-card">
+      <span class="mono-tag">Cryptography</span>
+      <h3>ZK Sensor Attestation</h3>
+      <p>KZG polynomial commitments for batch sensor attestation. Bulletproof range proofs on secp256k1. Provably honest rovers without revealing raw telemetry.</p>
+      <a href="https://github.com/YakRoboticsGarage/yakrover-protocols" target="_blank">→ yakrover-zk</a>
+    </div>
+    <div class="stack-card">
+      <span class="mono-tag">Fleet Security</span>
+      <h3>2-of-3 Fleet Protocol</h3>
+      <p>Bitkey-inspired multi-sig fleet management using Safe{Wallet}. No single point of failure. Operator + Hardware + Recovery key architecture.</p>
+      <a href="https://github.com/YakRoboticsGarage/yakrover-protocols" target="_blank">→ yakrover-fleet-2of3</a>
+    </div>
+    <div class="stack-card">
+      <span class="mono-tag">Hardware</span>
+      <h3>ESP32-S3 Tumbller Platform</h3>
+      <p>Self-balancing differential-drive robot. SimpleFOC motor control, MPC trajectory planning, RT-2 vision-language model oracle. The physical layer.</p>
+      <a href="https://yakrobot.bid/" target="_blank">→ yakrobot.bid</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════ VIDEO — YAKROVER PLATFORM ════ -->
+<section class="section-pad reveal">
+  <div style="text-align:center; margin-bottom: 2rem;">
+    <span class="section-label">See It In Action</span>
+    <h2 class="section-title">The YakRover Platform</h2>
+  </div>
+  <div class="video-wrap">
+    <iframe src="https://www.youtube-nocookie.com/embed/1GAPglwQm3k?rel=0" title="YakRover Demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</section>
+
+<!-- ════ MARS IMAGE ════ -->
+<div class="img-panel">
+  <img src="https://images.unsplash.com/photo-1612892483236-52d32a0e0ac1?w=1920&q=80" alt="Mars surface" loading="lazy">
+  <span class="panel-caption">Target: Autonomous surface operations&nbsp;&nbsp;·&nbsp;&nbsp;Photo: Unsplash</span>
+</div>
+
+<!-- ════ COMMUNITY ════ -->
+<section class="video2-section reveal">
+  <span class="section-label">Community</span>
+  <h2 class="section-title">Yak Robotics Garage</h2>
+  <p style="color: var(--moon); font-weight: 300; margin-bottom: 2rem; line-height: 1.6;">A distributed study group building open-source robotics infrastructure. Part of the <a href="https://www.yakcollective.org/study-groups/yak-robotics-garage" target="_blank" style="color: var(--mars-light); text-decoration: none;">Yak Collective</a>.</p>
+  <a href="https://www.yakcollective.org/study-groups/yak-robotics-garage" target="_blank">
+    <img src="https://www.yakcollective.org/assets/6440727e4ee4e980ef320e7effba7574.png" alt="Yak Robotics Garage" style="width:100%; max-width:900px; border-radius:8px; border:1px solid rgba(255,255,255,0.08); box-shadow:0 20px 60px rgba(0,0,0,0.5); transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
+  </a>
+</section>
+
+<!-- ════ DESERT IMAGE ════ -->
+<div class="img-panel">
+  <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1920&q=80" alt="Mojave Desert" loading="lazy">
+  <span class="panel-caption">Earth proving grounds — Mojave&nbsp;&nbsp;·&nbsp;&nbsp;Photo: Unsplash</span>
+</div>
+
+<!-- ════ ABOUT / WHY ════ -->
+<section class="about-section">
+  <div class="section-pad reveal">
+    <span class="section-label">Why This Matters</span>
+    <h2 class="section-title">Democratizing Planetary Exploration</h2>
+
+    <div class="about-grid">
+      <div class="about-block">
+        <h3>The Problem</h3>
+        <p>Space rovers cost billions and are controlled by a handful of institutions. The Perseverance rover cost $2.7B. Only 6 organizations have ever landed anything on Mars. The knowledge stays locked in proprietary systems.</p>
+      </div>
+      <div class="about-block">
+        <h3>The Approach</h3>
+        <p>Start with a $150 open-source rover anyone can build. Prove the software stack on Earth first — AI orchestration, cryptographic identity, fleet coordination, marketplace economics. Then take it off-world.</p>
+      </div>
+      <div class="about-block">
+        <h3>What Exists Today</h3>
+        <p>Working hardware platform, 6 published protocol specifications, MCP gateway for LLM-controlled rovers, ZK attestation proofs, on-chain identity contracts, and a growing community of builders. ~500K lines of code built in the open.</p>
+      </div>
+      <div class="about-block">
+        <h3>What's Next</h3>
+        <p>Hardening the platform for field deployment, publishing reference hardware designs, running desert endurance tests, and growing the open-source contributor community. From garage project to civilization-scale infrastructure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CTA ════ -->
+<section class="cta-section reveal">
+  <span class="section-label">Join The Mission</span>
+  <h2 class="section-title">Not one rover for billions.<br>A billion rovers for everyone.</h2>
+  <p>All code, all hardware designs, all protocols — open source, forever.</p>
+  <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+    <a href="https://github.com/YakRoboticsGarage" target="_blank" class="btn btn-primary">GitHub</a>
+    <a href="https://yakrobot.bid/" target="_blank" class="btn btn-ghost">yakrobot.bid</a>
+    <a href="https://www.yakcollective.org/study-groups/yak-robotics-garage" target="_blank" class="btn btn-ghost">Yak Collective</a>
+  </div>
+
+  <div class="footer-links">
+    <a href="https://github.com/YakRoboticsGarage/yakrover-protocols" target="_blank">Protocols</a>
+    <a href="https://github.com/YakRoboticsGarage/yakrover-8004-mcp" target="_blank">MCP Gateway</a>
+    <a href="https://github.com/YakRoboticsGarage/yakrover-marketplace" target="_blank">Marketplace</a>
+  </div>
+</section>
+
+<div class="footer-copy">© 2026 Yak Robotics Garage</div>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
