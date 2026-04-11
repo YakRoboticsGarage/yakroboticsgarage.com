@@ -179,13 +179,17 @@ section { position: relative; z-index: 1; }
 
 .scroll-hint {
   position: absolute;
-  bottom: 2rem;
+  bottom: 6rem;
   font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.5);
   animation: bounce 2s infinite;
+}
+
+@media (max-width: 600px) {
+  .scroll-hint { bottom: 2rem; font-size: 0.75rem; color: rgba(255,255,255,0.6); }
 }
 
 /* ── SECTION STYLING ── */
@@ -631,8 +635,8 @@ section { position: relative; z-index: 1; }
         <div class="step-icon">🏜️</div>
         <div class="step-num">Step 02 — Next</div>
         <details>
-          <summary>Rove the Mojave</summary>
-          <p>Harden the platform for desert terrain. Autonomous navigation across miles of uncharted earth. Long-range comms, solar power, fleet coordination. Proving ground for what comes next.</p>
+          <summary>Rove the Mojave &amp; Arctic Lapland</summary>
+          <p>Harden the platform for extreme terrain — Mojave heat and Lapland cold. Autonomous navigation across miles of uncharted earth. Long-range comms, solar power, fleet coordination. Proving ground for what comes next.</p>
         </details>
       </div>
       <div class="step">
@@ -672,13 +676,14 @@ section { position: relative; z-index: 1; }
   <span class="section-label">What's Already Built</span>
   <h2 class="section-title">The Protocol Stack</h2>
   <p style="color: var(--moon); font-weight: 300; line-height: 1.7; max-width: 650px; margin-bottom: 1rem;">A full-stack open-source infrastructure for autonomous robot fleets — from on-chip cryptography to on-chain identity.</p>
+  <a href="https://github.com/YakRoboticsGarage/yakrover-protocols" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--glow); text-decoration: none; border: 1px solid rgba(255,159,28,0.3); padding: 0.6em 1.3em; border-radius: 4px; margin-bottom: 2rem; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--glow)';this.style.background='rgba(255,159,28,0.08)'" onmouseout="this.style.borderColor='rgba(255,159,28,0.3)';this.style.background='transparent'">⚙ VIEW FULL PROTOCOL SPEC ON GITHUB →</a>
 
   <div class="stack-grid">
     <div class="stack-card">
       <span class="mono-tag">Identity</span>
       <h3>ERC-8004 Robot Identity</h3>
       <p>On-chain discovery and identity protocol for robots. Each rover gets a verifiable, decentralized identity anchored to hardware via ATECC608B secure elements.</p>
-      <a href="https://github.com/YakRoboticsGarage/yakrover-protocols" target="_blank">→ yakrover-protocols</a>
+      <a href="https://github.com/YakRoboticsGarage/yakrover-protocols/tree/main/01-yakrover-identity" target="_blank">→ yakrover-identity</a>
     </div>
     <div class="stack-card">
       <span class="mono-tag">Gateway</span>
@@ -693,13 +698,13 @@ section { position: relative; z-index: 1; }
       <a href="https://github.com/YakRoboticsGarage/yakrover-marketplace" target="_blank">→ yakrover-marketplace</a>
     </div>
     <div class="stack-card">
-      <span class="mono-tag">Cryptography</span>
+      <span class="mono-tag">Cryptography · <span style="color:rgba(255,255,255,0.4);">In Design</span></span>
       <h3>ZK Sensor Attestation</h3>
       <p>KZG polynomial commitments for batch sensor attestation. Bulletproof range proofs on secp256k1. Provably honest rovers without revealing raw telemetry.</p>
       <a href="https://github.com/YakRoboticsGarage/yakrover-protocols" target="_blank">→ yakrover-zk</a>
     </div>
     <div class="stack-card">
-      <span class="mono-tag">Fleet Security</span>
+      <span class="mono-tag">Fleet Security · <span style="color:rgba(255,255,255,0.4);">In Design</span></span>
       <h3>2-of-3 Fleet Protocol</h3>
       <p>Bitkey-inspired multi-sig fleet management using Safe{Wallet}. No single point of failure. Operator + Hardware + Recovery key architecture.</p>
       <a href="https://github.com/YakRoboticsGarage/yakrover-protocols" target="_blank">→ yakrover-fleet-2of3</a>
@@ -708,7 +713,7 @@ section { position: relative; z-index: 1; }
       <span class="mono-tag">Hardware</span>
       <h3>ESP32-S3 Tumbller Platform</h3>
       <p>Self-balancing differential-drive robot. SimpleFOC motor control, MPC trajectory planning, RT-2 vision-language model oracle. The physical layer.</p>
-      <a href="https://yakrobot.bid/" target="_blank">→ yakrobot.bid</a>
+      <a href="https://github.com/YakRoboticsGarage" target="_blank">→ YakRoboticsGarage</a>
     </div>
   </div>
 </section>
@@ -742,7 +747,7 @@ section { position: relative; z-index: 1; }
       { name: 'Tel Aviv', lat: 32.07, lon: 34.78 },
       { name: 'Tokyo',    lat: 35.68, lon: 139.69 },
     ];
-    const links = [[0,2],[2,3],[1,4],[0,4],[1,2],[3,4],[0,1]];
+    const links = [[0,2],[2,3],[1,4],[0,4],[1,2],[3,4],[0,1],[0,3]];
 
     const projection = d3.geoOrthographic()
       .scale(270)
@@ -945,7 +950,7 @@ section { position: relative; z-index: 1; }
 <!-- ════ DESERT IMAGE ════ -->
 <div class="img-panel">
   <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1920&q=80" alt="Mojave Desert" loading="lazy">
-  <span class="panel-caption">Earth proving grounds — Mojave&nbsp;&nbsp;·&nbsp;&nbsp;Photo: <a href="https://unsplash.com" target="_blank" style="color:inherit;text-decoration:underline;">Unsplash</a></span>
+  <span class="panel-caption">Earth proving grounds — Mojave &amp; Arctic&nbsp;&nbsp;·&nbsp;&nbsp;Photo: <a href="https://unsplash.com" target="_blank" style="color:inherit;text-decoration:underline;">Unsplash</a></span>
 </div>
 
 <!-- ════ ABOUT / WHY ════ -->
@@ -957,7 +962,7 @@ section { position: relative; z-index: 1; }
     <div class="about-grid">
       <div class="about-block">
         <h3>The Problem</h3>
-        <p>Space rovers cost billions and are controlled by a handful of institutions. The Perseverance rover cost $2.7B. Only 6 organizations have ever landed anything on Mars. The knowledge stays locked in proprietary systems.</p>
+        <p>Space rovers cost billions and are controlled by a handful of institutions. The Perseverance rover cost $2.7B. Only 2 nations have ever driven a rover on Mars. Planetary exploration is civilization-scale infrastructure — it should be accessible to everyone, from a curious kid to a grandma next door.</p>
       </div>
       <div class="about-block">
         <h3>The Approach</h3>
@@ -965,11 +970,11 @@ section { position: relative; z-index: 1; }
       </div>
       <div class="about-block">
         <h3>What Exists Today</h3>
-        <p>Working hardware platform, 6 published protocol specifications, MCP gateway for LLM-controlled rovers, ZK attestation proofs, on-chain identity contracts, and a growing community of builders. ~500K lines of code built in the open.</p>
+        <p>Working hardware platform, protocol specifications, MCP gateway for LLM-controlled rovers, on-chain identity contracts, and a growing community of builders across five countries.</p>
       </div>
       <div class="about-block">
         <h3>What's Next</h3>
-        <p>Hardening the platform for field deployment, publishing reference hardware designs, running desert endurance tests, and growing the open-source contributor community. From garage project to civilization-scale infrastructure.</p>
+        <p>Hardening the platform for field deployment, publishing reference hardware designs, running Mojave and Arctic Lapland endurance tests, and growing the open-source contributor community. From garage project to civilization-scale infrastructure.</p>
       </div>
     </div>
   </div>
@@ -979,7 +984,7 @@ section { position: relative; z-index: 1; }
 <section class="cta-section reveal">
   <span class="section-label">Join The Mission</span>
   <h2 class="section-title">Not one rover for billions.<br>A billion rovers for everyone.</h2>
-  <p>All code, all hardware designs, all protocols — open source, forever.</p>
+  <p>All code, all hardware designs, all protocols — open source.</p>
   <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
     <a href="https://github.com/YakRoboticsGarage" target="_blank" class="btn btn-primary">GitHub</a>
     <a href="https://yakrobot.bid/" target="_blank" class="btn btn-ghost">yakrobot.bid</a>
